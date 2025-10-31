@@ -14,7 +14,9 @@
       system: let
         pkgs = nixpkgs.legacyPackages.${system};
       in {
-        devShells.default = pkgs.mkShell {};
+        devShells.default = pkgs.mkShell {
+          buildInputs = with pkgs; [http-server];
+        };
       }
     );
 }
