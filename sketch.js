@@ -8,23 +8,24 @@ const t = textmode.create({
 const tm = t;
 
 t.setup(async () => {
-  myImage = await t.loadImage("juan.png");
+  myImage = await t.loadImage("twente.svg");
 });
 
 t.draw(async () => {
   t.background(0);
+  console.log(t.characters);
 
   for (let y = 0; y < t.grid.rows; y++) {
     for (let x = 0; x < t.grid.cols; x++) {
-      tm.push();
+      t.push();
 
-      tm.char(".");
-      tm.charColor(120, 0, 255);
+      t.char(".");
+      t.charColor(120, 0, 255);
 
-      tm.cellColor(0, 0, 0);
-      tm.rect(x, y, 1, 1);
+      t.cellColor(0, 0, 0);
+      t.rect(x, y, 1, 1);
 
-      tm.pop();
+      t.pop();
     }
   }
 
