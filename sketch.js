@@ -19,18 +19,8 @@ t.draw(async () => {
     for (let x = 0; x < t.grid.cols; x++) {
       t.push();
 
-      const center = [t.grid.cols / 2, t.grid.rows / 2]
-      const radius = 25
-      const fade = 25
-
-      const diff = [center[0] - x, center[1] - y]
-      const distance = Math.sqrt(diff[0] * diff[0] + diff[1] * diff[1]) - radius
-
-      const blue = 255 * (1 - distance) / fade
-      const red = 120 * (1 - distance) / fade
-
       t.char(".");
-      t.charColor(red, 0, blue);
+      t.charColor(120, 0, 255);
 
       t.cellColor(0, 0, 0);
       t.rect(x, y, 1, 1);
@@ -38,6 +28,8 @@ t.draw(async () => {
       t.pop();
     }
   }
+
+  t.image(myImage, 0, 0, t.grid.cols, t.grid.rows);
 });
 
 t.windowResized(() => {
