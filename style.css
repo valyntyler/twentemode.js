@@ -7,4 +7,5 @@ body {
 
 canvas {
   margin-top: 10vh;
+  border: 1px solid grey;
 }

@@ -5,12 +5,12 @@
  * @link https://github.com/humanbydefinition/textmode.js
  */
 
-console.log("hello from textmode!!!")
+console.log("hello from textmode!!")
 
 // Create textmode instance
 const tm = textmode.create({
-  width: window.innerWidth / 2,
-  height: window.innerHeight / 2,
+  width: window.innerWidth * 0.6,
+  height: window.innerHeight * 0.6,
   fontSize: 16
 });
 
@@ -57,18 +57,30 @@ tm.draw(() => {
         tm.charColor(0, green, 0);
 
         // let me cook
-        const fadeBounadryBottom = tm.grid.rows * 0.8;
-        const percOut = (y - fadeBounadryBottom) / (tm.grid.rows - fadeBounadryBottom)
-        if (y > fadeBounadryBottom) {
-          const intensity = green * (1 - percOut)
-          tm.charColor(0, intensity, 0);
-        }
-        const fadeBoundaryTop = tm.grid.rows * 0.2;
-        const percIn = y / (tm.grid.rows - fadeBounadryBottom)
-        if (y < fadeBoundaryTop) {
-          const intensity = green * percIn
-          tm.charColor(0, intensity, 0);
-        }
+        // const fadeBounadryBottom = tm.grid.rows * 0.8;
+        // const percOut = (y - fadeBounadryBottom) / (tm.grid.rows - fadeBounadryBottom)
+        // if (y > fadeBounadryBottom) {
+        //   const intensity = green * (1 - percOut)
+        //   tm.charColor(0, intensity, 0);
+        // }
+        // const fadeBoundaryTop = tm.grid.rows * 0.2;
+        // const percIn = y / (tm.grid.rows - fadeBounadryBottom)
+        // if (y < fadeBoundaryTop) {
+        //   const intensity = green * percIn
+        //   tm.charColor(0, intensity, 0);
+        // }
+
+        // i didn't cook
+        const center = [tm.grid.cols / 2, tm.grid.rows / 2]
+        const radius = Math.min(center[0], center[1])
+        const circle_fade = 10
+
+        const diff = [center[0] - x, center[1] - y]
+        const distance = Math.sqrt(diff[0] * diff[0] + diff[1] * diff[1]) - radius
+
+        const intensity = 255 * (1 - distance) / circle_fade
+        tm.charColor(0, intensity, 0);
+
 
         // Occasionally change character for glitch effect
         if (Math.random() < 0.1) {
