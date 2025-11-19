@@ -28,8 +28,22 @@ t.draw(async () => {
 
       const color = imageRGB(horseImage, [x, y], resolution)
 
-      t.char(".");
-      t.charColor(0, color[1], 0)
+
+      if (color[1] > 250) {
+        t.char("#");
+      } else if (color[1] > 200) {
+        t.char("@");
+      } else if (color[1] > 150) {
+        t.char("*");
+      } else if (color[1] > 100) {
+        t.char("%");
+      } else if (color[1] > 50) {
+        t.char(":");
+      } else {
+        t.char(".");
+      }
+
+      t.charColor(color[1], color[1], color[2])
 
       t.cellColor(0, 0, 0);
       t.rect(x, y, 1, 1);
