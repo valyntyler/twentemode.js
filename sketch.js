@@ -20,7 +20,7 @@ t.setup(async () => {
 
 t.draw(async () => {
   t.background(0);
-  console.log("hello from this frame");
+  console.log("hello from this frame!!");
 
   for (let y = 0; y < t.grid.rows; y++) {
     for (let x = 0; x < t.grid.cols; x++) {
@@ -29,7 +29,7 @@ t.draw(async () => {
       const color = imageRGB(horseImage, [x, y], resolution)
 
       t.char(".");
-      t.charColor(color[0], color[1], color[2]);
+      t.charColor(0, color[1], 0)
 
       t.cellColor(0, 0, 0);
       t.rect(x, y, 1, 1);
