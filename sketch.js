@@ -161,7 +161,7 @@ t.draw(async () => {
       const color = imageRGB(horseImage, [x, y], resolution);
 
       if (color[1] >= 1) {
-        color[1] = color[1] * 0.9 + ((r + g + b) / 3) * 0.1;
+        color[1] = color[1] * 0.9 + ((r + g + b) / 3) * 0.2;
       }
 
       if (color[1] > 250) {
