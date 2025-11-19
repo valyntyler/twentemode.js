@@ -16,9 +16,31 @@ const t = textmode.create({
 });
 const tm = t;
 
-t.setup(async () => {
+async function onResizeCanvas() {
+  tm.resizeCanvas(window.innerWidth * 0.6, window.innerHeight * 0.6);
+
+  // Resample Image
   resolution = [t.grid.cols, t.grid.rows];
   horseImage = await loadImage("twente.svg", resolution);
+
+  // Reinitialize drops for new grid size
+  drops.length = 0;
+  for (let x = 0; x < tm.grid.cols; x++) {
+    drops[x] = {
+      y: Math.random() * -50,
+      speed: Math.random() * 0.3 + 0.1,
+      length: Math.floor(Math.random() * 15) + 5,
+      chars: [],
+    };
+
+    for (let i = 0; i < drops[x].length; i++) {
+      drops[x].chars[i] = chars[Math.floor(Math.random() * chars.length)];
+    }
+  }
+}
+
+t.setup(async () => {
+  onResizeCanvas();
 
   // Initialize rain drops
   for (let x = 0; x < tm.grid.cols; x++) {
@@ -192,21 +214,4 @@ t.draw(async () => {
   }
 });
 
-tm.windowResized(() => {
-  tm.resizeCanvas(window.innerWidth, window.innerHeight);
-
-  // Reinitialize drops for new grid size
-  drops.length = 0;
-  for (let x = 0; x < tm.grid.cols; x++) {
-    drops[x] = {
-      y: Math.random() * -50,
-      speed: Math.random() * 0.3 + 0.1,
-      length: Math.floor(Math.random() * 15) + 5,
-      chars: [],
-    };
-
-    for (let i = 0; i < drops[x].length; i++) {
-      drops[x].chars[i] = chars[Math.floor(Math.random() * chars.length)];
-    }
-  }
-});
+tm.windowResized(onResizeCanvas);
