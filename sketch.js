@@ -1,4 +1,7 @@
-import { loadImage } from "./image.js";
+import { loadImage, imageRGB } from "./image.js";
+
+let resolution = null;
+let horseImage = null;
 
 console.log("Hello, textmode.js!");
 const t = textmode.create({
@@ -9,8 +12,10 @@ const t = textmode.create({
 });
 
 t.setup(async () => {
-  const jeff = await loadImage("juan.png", [100, 100])
-  console.log(jeff)
+  resolution = [t.grid.cols, t.grid.rows]
+  horseImage = await loadImage("twente.svg", resolution)
+
+  console.log(horseImage.data)
 });
 
 t.draw(async () => {
@@ -21,8 +26,10 @@ t.draw(async () => {
     for (let x = 0; x < t.grid.cols; x++) {
       t.push();
 
+      const color = imageRGB(horseImage, [x, y], resolution)
+
       t.char(".");
-      t.charColor(120, 0, 255);
+      t.charColor(color[0], color[1], color[2]);
 
       t.cellColor(0, 0, 0);
       t.rect(x, y, 1, 1);

@@ -22,3 +22,19 @@ export function loadImage(path, resolution) {
     };
   })
 }
+
+export function toImageSpace(position, resolution) {
+  const width = resolution[0]
+  const x = position[0]
+  const y = position[1]
+  return ((y * width) + x) * 4
+}
+
+export function imageRGB(image, position, resolution) {
+  const pixelIndex = toImageSpace(position, resolution)
+  return [
+    image.data[pixelIndex],
+    image.data[pixelIndex + 1],
+    image.data[pixelIndex + 2]
+  ];
+}
