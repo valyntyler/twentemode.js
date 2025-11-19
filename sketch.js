@@ -132,12 +132,12 @@ t.draw(async () => {
         t.char(".");
       }
 
-      t.charColor(color[1], color[1], color[2]);
+      t.charColor(0, color[1], 0);
 
       t.cellColor(0, 0, 0);
 
       // only draw if no "transparency"
-      if (color[1] >= 10) {
+      if (color[1] >= 1) {
         t.rect(x, y, 1, 1);
       }
 
