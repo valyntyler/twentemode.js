@@ -158,9 +158,11 @@ t.draw(async () => {
       };
 
       const [r, g, b] = hsl2rgb(hue, saturation, lightness);
-      t.charColor(r, g, b);
-
       const color = imageRGB(horseImage, [x, y], resolution);
+
+      if (color[1] >= 1) {
+        color[1] = color[1] * 0.9 + ((r + g + b) / 3) * 0.1;
+      }
 
       if (color[1] > 250) {
         t.char("#");
@@ -176,7 +178,7 @@ t.draw(async () => {
         t.char(".");
       }
 
-      // t.charColor(0, color[1], 0);
+      t.charColor(0, color[1], 0);
 
       t.cellColor(0, 0, 0);
 
