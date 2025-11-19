@@ -12,10 +12,10 @@ const t = textmode.create({
 });
 
 t.setup(async () => {
-  resolution = [t.grid.cols, t.grid.rows]
-  horseImage = await loadImage("twente.svg", resolution)
+  resolution = [t.grid.cols, t.grid.rows];
+  horseImage = await loadImage("twente.svg", resolution);
 
-  console.log(horseImage.data)
+  console.log(horseImage.data);
 });
 
 t.draw(async () => {
@@ -26,8 +26,7 @@ t.draw(async () => {
     for (let x = 0; x < t.grid.cols; x++) {
       t.push();
 
-      const color = imageRGB(horseImage, [x, y], resolution)
-
+      const color = imageRGB(horseImage, [x, y], resolution);
 
       if (color[1] > 250) {
         t.char("#");
@@ -43,7 +42,7 @@ t.draw(async () => {
         t.char(".");
       }
 
-      t.charColor(color[1], color[1], color[2])
+      t.charColor(color[1], color[1], color[2]);
 
       t.cellColor(0, 0, 0);
       t.rect(x, y, 1, 1);
