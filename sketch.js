@@ -30,17 +30,15 @@ t.draw(async () => {
 
 
       if (color[1] > 250) {
-        t.char("#");
+        t.char('█');
       } else if (color[1] > 200) {
-        t.char("@");
+        t.char('▓');
       } else if (color[1] > 150) {
-        t.char("*");
+        t.char('▒');
       } else if (color[1] > 100) {
-        t.char("%");
-      } else if (color[1] > 50) {
-        t.char(":");
+        t.char('░');
       } else {
-        t.char(".");
+        t.char('·');
       }
 
       t.charColor(color[1], color[1], color[2])
