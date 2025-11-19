@@ -17,7 +17,11 @@ const t = textmode.create({
 const tm = t;
 
 async function onResizeCanvas() {
-  tm.resizeCanvas(window.innerWidth * 0.6, window.innerHeight * 0.6);
+  const aspectRatio = 960 / 639;
+  const height = Math.min(window.innerWidth, window.innerHeight);
+  const width = height * aspectRatio;
+
+  tm.resizeCanvas(width * 0.6, height * 0.6);
 
   // Resample Image
   resolution = [t.grid.cols, t.grid.rows];
