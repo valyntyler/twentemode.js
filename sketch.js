@@ -1,36 +1,29 @@
-function loadImageInternal(name, path) {
+function loadImage(path, resolution) {
   return new Promise((resolve, reject) => {
     const img = new Image();
+
     img.crossOrigin = "anonymous";
+    img.src = path;
+
+    img.onerror = () => {
+      reject(new Error(`Failed to load image: ${path}`));
+    };
 
     img.onload = () => {
       const canvas = document.createElement('canvas');
-      canvas.width = 8;
-      canvas.height = 6;
+      canvas.width = resolution[0];
+      canvas.height = resolution[1];
 
       const ctx = canvas.getContext('2d');
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-      //
-      const data = ctx.getImageData(0, 0, canvas.width, canvas.height)
-      console.log(data.data)
-
-      // this.images.set(name, {
-      //   canvas,
-      //   imageData: ctx.getImageData(0, 0, canvas.width, canvas.height)
-      // });
-
-      resolve();
+      const data = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      resolve(data);
     };
-
-    img.onerror = () => {
-      reject(new Error(`Failed to load image: ${name} from ${path}`));
-    };
-
-    img.src = path;
-  });
+  })
 }
 
 (async () => {
-  await loadImageInternal("fuck you", "./juan.png")
+  const jeff = await loadImage("juan.png", [100, 100])
+  console.log(jeff)
 })();
