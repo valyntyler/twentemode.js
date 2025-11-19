@@ -38,7 +38,7 @@ void main() {
   float noise = random(gridPos + u_frameCount * 0.1);
 
   o_character = vec4(0.01, 0.0, 0.0, 1.0);
-  o_primaryColor = vec4(vec3(1.0), 1.0);
+  o_primaryColor = vec4(1.0, noise, 1.0, 1.0);
   o_secondaryColor = vec4(0.0, 0.0, 0.0, 1.0);
   o_rotation = vec4(0.0, 0.0, 0.0, 1.0);
   o_transform = vec4(0.0, 0.0, 0.0, 1.0);
@@ -69,6 +69,8 @@ t.draw(async () => {
   }
 
   t.shader(noiseShader);
+  t.setUniform('u_frameCount', t.frameCount);
+  t.rect(0, 0, t.grid.cols, t.grid.rows);
   // t.image(myImage, 0, 0, t.grid.cols, t.grid.rows);
 });
 
