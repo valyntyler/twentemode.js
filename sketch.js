@@ -34,11 +34,11 @@ t.draw(async () => {
       } else if (color[1] > 200) {
         t.char("@");
       } else if (color[1] > 150) {
-        t.char("*");
-      } else if (color[1] > 100) {
         t.char("%");
+      } else if (color[1] > 100) {
+        t.char("*");
       } else if (color[1] > 50) {
-        t.char(":");
+        t.char("+");
       } else {
         t.char(".");
       }
