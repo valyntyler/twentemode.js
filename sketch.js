@@ -1,31 +1,32 @@
-/**
- * @name [textmode.js] Digital Rain
- * @description Matrix-style falling digital rain using character-based graphics.
- * @author humanbydefinition
- * @link https://github.com/humanbydefinition/textmode.js
- */
-
-console.log("hello from textmode!!")
-
-// Create textmode instance
-const tm = textmode.create({
-  width: window.innerWidth * 0.6,
-  height: window.innerHeight * 0.6,
-  fontSize: 16
-});
+import { loadImage, imageRGB } from "./image.js";
 
 // Rain drop system
 const drops = [];
-const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-tm.setup(() => {
+let resolution = null;
+let horseImage = null;
+
+console.log("Hello, textmode.js!");
+const t = textmode.create({
+  width: window.innerWidth * 0.6,
+  height: window.innerHeight * 0.6,
+  fontSize: 16,
+  frameRate: 60,
+});
+const tm = t;
+
+t.setup(async () => {
+  resolution = [t.grid.cols, t.grid.rows];
+  horseImage = await loadImage("twente.svg", resolution);
+
   // Initialize rain drops
   for (let x = 0; x < tm.grid.cols; x++) {
     drops[x] = {
       y: Math.random() * -50,
       speed: Math.random() * 0.3 + 0.1,
       length: Math.floor(Math.random() * 15) + 5,
-      chars: []
+      chars: [],
     };
 
     // Generate random characters for this drop
@@ -35,9 +36,9 @@ tm.setup(() => {
   }
 });
 
-
-tm.draw(() => {
-  tm.background(0);
+t.draw(async () => {
+  t.background(0);
+  console.log("hello from this frame!!");
 
   // Update and draw each rain drop
   for (let x = 0; x < drops.length; x++) {
@@ -71,16 +72,16 @@ tm.draw(() => {
         // }
 
         // i didn't cook
-        const center = [tm.grid.cols / 2, tm.grid.rows / 2]
-        const radius = Math.min(center[0], center[1])
-        const circle_fade = 10
+        const center = [tm.grid.cols / 2, tm.grid.rows / 2];
+        const radius = Math.min(center[0], center[1]);
+        const circle_fade = 10;
 
-        const diff = [center[0] - x, center[1] - y]
-        const distance = Math.sqrt(diff[0] * diff[0] + diff[1] * diff[1]) - radius
+        const diff = [center[0] - x, center[1] - y];
+        const distance =
+          Math.sqrt(diff[0] * diff[0] + diff[1] * diff[1]) - radius;
 
-        const intensity = 255 * (1 - distance) / circle_fade
+        const intensity = (255 * (1 - distance)) / circle_fade;
         tm.charColor(0, intensity, 0);
-
 
         // Occasionally change character for glitch effect
         if (Math.random() < 0.1) {
@@ -110,6 +111,39 @@ tm.draw(() => {
       }
     }
   }
+
+  for (let y = 0; y < t.grid.rows; y++) {
+    for (let x = 0; x < t.grid.cols; x++) {
+      t.push();
+
+      const color = imageRGB(horseImage, [x, y], resolution);
+
+      if (color[1] > 250) {
+        t.char("#");
+      } else if (color[1] > 200) {
+        t.char("@");
+      } else if (color[1] > 150) {
+        t.char("%");
+      } else if (color[1] > 100) {
+        t.char("*");
+      } else if (color[1] > 50) {
+        t.char("+");
+      } else {
+        t.char(".");
+      }
+
+      t.charColor(color[1], color[1], color[2]);
+
+      t.cellColor(0, 0, 0);
+
+      // only draw if no "transparency"
+      if (color[1] >= 10) {
+        t.rect(x, y, 1, 1);
+      }
+
+      t.pop();
+    }
+  }
 });
 
 tm.windowResized(() => {
@@ -122,7 +156,7 @@ tm.windowResized(() => {
       y: Math.random() * -50,
       speed: Math.random() * 0.3 + 0.1,
       length: Math.floor(Math.random() * 15) + 5,
-      chars: []
+      chars: [],
     };
 
     for (let i = 0; i < drops[x].length; i++) {
